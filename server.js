@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const express = require("express");
-const { WebSocketServer } = require('ws')
+const WebSocket = require('ws');
 const { exec } = require('child_process');
 const helper = require('./js/helper.js');
 const AWS = require('aws-sdk');
@@ -23,7 +23,7 @@ AWS.config.update({
 // Set up S3 client
 const s3 = new AWS.S3();
 
-const sockserver = new WebSocketServer({ port: WS_PORT });
+const wss = new WebSocket.Server({ port: PORT })
 
 
 // array of connected websocket clients
@@ -82,7 +82,7 @@ function uploadFileToS3(filePath) {
   });
 }
 
-sockserver.on("connection", (ws, req) => {
+wss.on("connection", (ws, req) => {
   console.log("Connected");
   // add new connected client
   connectedClients.push(ws);
