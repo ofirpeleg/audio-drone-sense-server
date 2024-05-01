@@ -81,7 +81,7 @@ function uploadFileToS3(filePath) {
   });
 }
 
-wsServer.on("connection", (ws, req) => {
+sockserver.on("connection", (ws, req) => {
   console.log("Connected");
   // add new connected client
   connectedClients.push(ws);
