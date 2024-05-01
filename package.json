@@ -11,7 +11,6 @@
     "ws": "^8.16.0"
   },
   "scripts": {
-  "build": "npm install",
   "start": "node server.js"
   }
 }
