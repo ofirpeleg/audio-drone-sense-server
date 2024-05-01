@@ -1,7 +1,7 @@
 const path = require("path");
 const fs = require("fs");
 const express = require("express");
-const WebSocket = require("ws");
+const { WebSocketServer } = require('ws')
 const { exec } = require('child_process');
 const helper = require('./js/helper.js');
 const AWS = require('aws-sdk');
@@ -23,9 +23,7 @@ AWS.config.update({
 // Set up S3 client
 const s3 = new AWS.S3();
 
-const wsServer = new WebSocket.Server({ port: WS_PORT }, () =>
-  console.log(`WS server is listening at ws://192.168.1.140:${WS_PORT}`)
-);
+const sockserver = new WebSocketServer({ port: 443 })
 
 // array of connected websocket clients
 let connectedClients = [];
