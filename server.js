@@ -10,8 +10,8 @@ require('dotenv').config();
 
 const app = express();
 
-const WS_PORT = process.env.WS_PORT || 8888;
-const HTTP_PORT = process.env.HTTP_PORT || 8000;
+const WS_PORT = process.env.WS_PORT || 3000;
+const HTTP_PORT = process.env.HTTP_PORT || 4000;
 
 // Configure AWS with environment variables
 AWS.config.update({
