@@ -23,7 +23,7 @@ AWS.config.update({
 // Set up S3 client
 const s3 = new AWS.S3();
 
-const wss = new WebSocket.Server({ port: PORT })
+const wss = new WebSocket.Server({ port: WS_PORT })
 
 
 // array of connected websocket clients
