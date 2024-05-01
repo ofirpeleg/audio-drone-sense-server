@@ -110,9 +110,6 @@ sockserver.on("connection", (ws, req) => {
 
 app.use("/image", express.static("image"));
 app.use("/js", express.static("js"));
-app.get("/audio", (req, res) =>
-  res.sendFile(path.resolve(__dirname, "./audio_client.html"))
-);
 
 
 app.listen(HTTP_PORT, () =>
