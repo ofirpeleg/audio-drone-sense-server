@@ -23,7 +23,7 @@ AWS.config.update({
 // Set up S3 client
 const s3 = new AWS.S3();
 
-const sockserver = new WebSocketServer({ port: 443 })
+const sockserver = new WebSocketServer({ WS_PORT })
 
 // array of connected websocket clients
 let connectedClients = [];
@@ -115,5 +115,5 @@ app.get("/audio", (req, res) =>
 
 
 app.listen(HTTP_PORT, () =>
-  console.log(`HTTP server listening at http://localhost:${HTTP_PORT}`)
+  console.log(`HTTP server`)
 );
