@@ -83,36 +83,29 @@ function uploadFileToS3(filePath) {
 }
 
 wss.on("connection", (ws, req) => {
-    console.log("Connected");
-
-    // Assume it's not the front-end initially
-    ws.isFrontEnd = false;
-
-    ws.on('message', function (message) {
-        if (typeof message === 'string') {
-            if (message === "front-end") {
-                ws.isFrontEnd = true;
-                audioBuffer = []; // Initialize the buffer for audio data
-            }
-        } else if (message instanceof Buffer) {
-            // Assume binary data is audio data from ESP32
-            console.log("Audio data received");
-            if (ws.isFrontEnd) { // Only add to buffer if it's from front-end
-                audioBuffer.push(message);
-            }
-        }
+  console.log("Connected");
+  // add new connected client
+  connectedClients.push(ws);
+   // Initialize an empty buffer for this connection
+   audioBuffer = [];
+  // listen for messages from the streamer
+  ws.on("message", (data) => {
+    console.log(data);
+    audioBuffer.push(data);
+    connectedClients.forEach((ws, i) => {
+      if (ws.readyState === ws.OPEN) {
+        ws.send(data);
+      } else {
+        connectedClients.splice(i, 1);
+      }
     });
-
-    connectedClients.push(ws);
-
-    ws.on("close", () => {
-        console.log("Connection closed");
-        if (ws.isFrontEnd) {
-            console.log("Front-end disconnected, processing and saving audio");
-            processAndSaveAudio(audioBuffer);
-            audioBuffer = []; // Clear the buffer after processing
-        }
-    });
+  });
+  ws.on("close", () => {
+    console.log("Connection closed");
+    // When connection closes, process and save the audio
+    processAndSaveAudio(audioBuffer);
+    audioBuffer = [];
+  });
 });
 
 
